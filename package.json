@@ -1,0 +1,34 @@
+{
+	"name": "nodejs-service-template",
+	"version": "0.0.2",
+	"type": "module",
+	"module": "src/index.ts",
+	"engines": {
+		"node": ">=20.0.0"
+	},
+	"scripts": {
+		"dev": "bun env:decrypt && NODE_ENV=development bun run --watch src/index.ts",
+		"build": "bun build --compile --minify --sourcemap ./src/index.ts --outfile ./dist/app",
+		"start": "./dist/app",
+		"lint": "biome lint ./src/*",
+		"format": "biome format --write ./src/*",
+		"fix": "biome check --write ./src/*",
+		"test": "bun env:decrypt && bun test --coverage",
+		"test:watch": "bun test --watch",
+		"env:encrypt": "bun --silent senv encrypt .env.development > .env.dev.encrypted & bun --silent senv encrypt .env.test > .env.test.encrypted",
+		"env:decrypt": "bun --silent senv decrypt .env.dev.encrypted > .env.development & bun --silent senv decrypt .env.test.encrypted > .env.test"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.8.3",
+		"@types/bun": "^1.1.6",
+		"senv": "^1.0.2",
+		"tsconfig-paths": "^4.2.0",
+		"typescript": "^5.5.3"
+	},
+	"dependencies": {
+		"dotenv": "^16.4.5",
+		"hono": "^4.5.0",
+		"winston": "^3.13.1"
+	},
+	"trustedDependencies": ["@biomejs/biome"]
+}
